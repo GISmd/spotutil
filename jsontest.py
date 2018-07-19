@@ -6,6 +6,11 @@ Created on Thu Jul 19 10:41:18 2018
 
 Just playing with a json download from Skiley: https://www.skiley.net/
 
+How to use this script as of 19 July 2018:
+    Clone the repo, make a data folder in the repo directory, export a playlist
+    from skiley and place it in the data folder, make sure the jsonname variable
+    matches the json file you want to run this on, and run!
+
 Plan: Create a playlist class that can read a json file and can give you 
 various useful outputs via methods using pandas.
 
