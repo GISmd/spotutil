@@ -24,5 +24,10 @@ jsonname = r'Choice Cuts __ 1.json'
 jsonpath = os.path.join(cwd, r'data', jsonname)
 
 df = pd.read_json(jsonpath)
-print(df.columns)
-print(df[:5])
+datecols = ['albumReleaseDate','addedAt']
+for col in datecols:
+    df[col] = pd.to_datetime(df[col])
+# Plot histogram of addedAt by month and year
+df.addedAt.groupby([df.addedAt.dt.year, df.addedAt.dt.month]).count().plot(kind='bar')
+#print(df.columns)
+#print(df[:5])
