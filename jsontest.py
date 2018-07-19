@@ -51,10 +51,11 @@ else:
 if not isgui:
     matplotlib.use('Agg')
 
+# Construct path
 cwd = os.getcwd()
-jsonname = r'Choice Cuts __ 1.json'
 jsonpath = os.path.join(cwd, r'data', jsonname)
 
+# Magic? What's df stand for?
 df = pandas.read_json(jsonpath)
 datecols = ['albumReleaseDate','addedAt']
 for col in datecols:
