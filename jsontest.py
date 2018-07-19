@@ -25,8 +25,31 @@ Issues:
     name: https://github.com/pandas-dev/pandas/issues/21075
 """
 
+import matplotlib
 import os
+import sys
 import pandas
+
+
+# You done did it now. We out this bitch
+def peace():
+    print ("usage: python jsontest.py filename [nogui]")
+    sys.exit()
+
+isgui = True    # assuming not running from headless terminal
+
+# Check for proper arguments
+args = len(sys.argv)
+if args > 2:
+    isgui = False if sys.argv[2] == 'nogui' else peace()
+if args > 1:
+    jsonname = sys.argv[1]
+else:
+    peace()
+
+# If on a headless terminal, switch to a non-gui backend
+if not isgui:
+    matplotlib.use('Agg')
 
 cwd = os.getcwd()
 jsonname = r'Choice Cuts __ 1.json'
@@ -39,6 +62,10 @@ for col in datecols:
 
 # Plot histogram of addedAt by month and year
 grp = df.groupby([df.addedAt.dt.year.rename('year'), df.addedAt.dt.month.rename('month')])
-grp.addedAt.count().plot(kind='bar')
+plot = grp.addedAt.count().plot(kind='bar')
+fig = plot.get_figure()
+fig.savefig("./data/plot.pdf")
+if isgui:
+    fig.show()
 #print(df.columns)
 #print(df[:5])
