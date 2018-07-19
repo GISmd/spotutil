@@ -11,17 +11,17 @@ How to use this script as of 19 July 2018:
     from skiley and place it in the data folder, make sure the jsonname variable
     matches the json file you want to run this on, and run!
 
-Plan: Create a playlist class that can read a json file and can give you 
+Plan: Create a playlist class that can read a json file and can give you
 various useful outputs via methods using pandas.
 
 Possible useful methods:
     - Return tracks with a given release year or range of years.
-    - Return tracks matching certain values in any columns (i.e. if artist 
+    - Return tracks matching certain values in any columns (i.e. if artist
     name=="Rhye" or if trackPopularity>x...)
     - Methods for returning plots on the playlist data
 
 Issues:
-    - Needed to rename series when grouping if grouping by series of the same 
+    - Needed to rename series when grouping if grouping by series of the same
     name: https://github.com/pandas-dev/pandas/issues/21075
 """
 
