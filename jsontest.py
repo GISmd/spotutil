@@ -14,20 +14,26 @@ Possible useful methods:
     - Return tracks matching certain values in any columns (i.e. if artist 
     name=="Rhye" or if trackPopularity>x...)
     - Methods for returning plots on the playlist data
+
+Issues:
+    - Needed to rename series when grouping if grouping by series of the same 
+    name: https://github.com/pandas-dev/pandas/issues/21075
 """
 
 import os
-import pandas as pd
+import pandas
 
 cwd = os.getcwd()
 jsonname = r'Choice Cuts __ 1.json'
 jsonpath = os.path.join(cwd, r'data', jsonname)
 
-df = pd.read_json(jsonpath)
+df = pandas.read_json(jsonpath)
 datecols = ['albumReleaseDate','addedAt']
 for col in datecols:
-    df[col] = pd.to_datetime(df[col])
+    df[col] = pandas.to_datetime(df[col])
+
 # Plot histogram of addedAt by month and year
-df.addedAt.groupby([df.addedAt.dt.year, df.addedAt.dt.month]).count().plot(kind='bar')
+grp = df.groupby([df.addedAt.dt.year.rename('year'), df.addedAt.dt.month.rename('month')])
+grp.addedAt.count().plot(kind='bar')
 #print(df.columns)
 #print(df[:5])
