@@ -40,6 +40,8 @@ isgui = True    # assuming not running from headless terminal
 
 # Check for proper arguments
 args = len(sys.argv)
+if args > 3:
+    peace()
 if args > 2:
     isgui = False if sys.argv[2] == 'nogui' else peace()
 if args > 1:
