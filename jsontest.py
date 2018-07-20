@@ -26,6 +26,7 @@ Issues:
 """
 
 import matplotlib
+import matplotlib.pyplot as plt
 import os
 import sys
 import pandas
@@ -69,6 +70,6 @@ plot = grp.addedAt.count().plot(kind='bar')
 fig = plot.get_figure()
 fig.savefig("./data/plot.pdf")
 if isgui:
-    fig.show()
+    plt.show()
 #print(df.columns)
 #print(df[:5])
