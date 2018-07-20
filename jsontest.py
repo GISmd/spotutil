@@ -31,47 +31,48 @@ import os
 import sys
 import pandas
 
-
 # You done did it now. We out this bitch
 def peace():
     print("usage: python jsontest.py filename [nogui]")
     sys.exit()
 
+def pandamagic(jsonpath, isgui, savepath=None):
+    df = pandas.read_json(jsonpath)
+    datecols = ['albumReleaseDate', 'addedAt']
+    for col in datecols:
+        df[col] = pandas.to_datetime(df[col])
 
-isgui = True    # assuming not running from headless terminal
+    # Plot histogram of addedAt by month and year
+    grp = df.groupby([df.addedAt.dt.year.rename('year'),
+                      df.addedAt.dt.month.rename('month')])
+    plot = grp.addedAt.count().plot(kind='bar')
+    fig = plot.get_figure()
+    if not savepath:
+        fig.savefig("./data/plot.pdf")
+    if isgui:
+        plt.show()
 
-# Check for proper arguments
-args = len(sys.argv)
-if args > 3:
-    peace()
-if args > 2:
-    isgui = False if sys.argv[2] == 'nogui' else peace()
-if args > 1:
-    jsonname = sys.argv[1]
-else:
-    peace()
+def main():
+    isgui = True
 
-# If on a headless terminal, switch to a non-gui backend
-if not isgui:
-    matplotlib.use('Agg')
+    # Check for proper arguments
+    args = len(sys.argv)
+    if args > 3:
+        peace()
+    if args > 2:
+        isgui = False if sys.argv[2] == 'nogui' else peace()
+    if args > 1:
+        jsonname = sys.argv[1]
+    else:
+        peace()
 
-# Construct path
-cwd = os.getcwd()
-jsonpath = os.path.join(cwd, r'data', jsonname)
+    # If on a headless terminal, switch to a non-gui backend
+    if not isgui:
+        matplotlib.use('Agg')
 
-# Magic? What's df stand for?
-df = pandas.read_json(jsonpath)
-datecols = ['albumReleaseDate', 'addedAt']
-for col in datecols:
-    df[col] = pandas.to_datetime(df[col])
+    # Construct path
+    cwd = os.getcwd()
+    jsonpath = os.path.join(cwd, r'data', jsonname)
+    pandamagic(jsonpath, isgui)
 
-# Plot histogram of addedAt by month and year
-grp = df.groupby([df.addedAt.dt.year.rename('year'),
-                  df.addedAt.dt.month.rename('month')])
-plot = grp.addedAt.count().plot(kind='bar')
-fig = plot.get_figure()
-fig.savefig("./data/plot.pdf")
-if isgui:
-    plt.show()
-# print(df.columns)
-# print(df[:5])
+main()
