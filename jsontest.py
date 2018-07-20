@@ -34,8 +34,9 @@ import pandas
 
 # You done did it now. We out this bitch
 def peace():
-    print ("usage: python jsontest.py filename [nogui]")
+    print("usage: python jsontest.py filename [nogui]")
     sys.exit()
+
 
 isgui = True    # assuming not running from headless terminal
 
@@ -60,16 +61,17 @@ jsonpath = os.path.join(cwd, r'data', jsonname)
 
 # Magic? What's df stand for?
 df = pandas.read_json(jsonpath)
-datecols = ['albumReleaseDate','addedAt']
+datecols = ['albumReleaseDate', 'addedAt']
 for col in datecols:
     df[col] = pandas.to_datetime(df[col])
 
 # Plot histogram of addedAt by month and year
-grp = df.groupby([df.addedAt.dt.year.rename('year'), df.addedAt.dt.month.rename('month')])
+grp = df.groupby([df.addedAt.dt.year.rename('year'),
+                  df.addedAt.dt.month.rename('month')])
 plot = grp.addedAt.count().plot(kind='bar')
 fig = plot.get_figure()
 fig.savefig("./data/plot.pdf")
 if isgui:
     plt.show()
-#print(df.columns)
-#print(df[:5])
+# print(df.columns)
+# print(df[:5])
