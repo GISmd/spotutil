@@ -1,4 +1,5 @@
 # Directories
+.spotipyoauthcache
 data
 
 # Byte-compiled / optimized / DLL files
