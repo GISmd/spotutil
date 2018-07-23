@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 bottle = "*"
 spotipy = "*"
+"beautifulsoup4" = "*"
 
 [dev-packages]
 
